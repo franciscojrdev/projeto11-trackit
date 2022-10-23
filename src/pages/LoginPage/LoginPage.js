@@ -4,6 +4,9 @@ import styled from "styled-components";
 import logo from "../../assets/images/logo.png";
 import PatternButton from "../../components/StyledComponents/Button";
 import { ThreeDots } from "react-loader-spinner";
+import { LOGIN_URL } from "../../constants/urls";
+import axios from "axios";
+
 export default function LoginPage() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
@@ -16,8 +19,16 @@ export default function LoginPage() {
   function login(e) {
     e.preventDefault();
 
-    
-    
+    axios
+      .post(LOGIN_URL, form)
+      .then((res) => {
+          console.log(res.data);
+          setLoading(true);
+      })
+      .catch((err) => {
+          console.log(err.response.data.message);
+          setLoading(false);
+      });
   }
   return (
     <ContainerApp>
@@ -41,7 +52,7 @@ export default function LoginPage() {
           disabled={loading}
           required
         />
-        <PatternButton disabled={loading} onClick={()=> setLoading(!loading)}>
+        <PatternButton disabled={loading}>
           {!loading ? (
             "Entrar"
           ) : (
@@ -107,7 +118,7 @@ export const Form = styled.form`
     }
   }
 `;
-export const Title = styled.div`
+export const Title = styled.h2`
   font-size: 14px;
   font-weight: 400;
   color: #52b6ff;

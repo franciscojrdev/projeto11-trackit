@@ -4,8 +4,11 @@ import { Form } from "../LoginPage/LoginPage";
 import { Title } from "../LoginPage/LoginPage";
 import PatternButton from "../../components/StyledComponents/Button";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
-export default function RegistrationPage() {
+import axios from "axios";
+import { SIGN_UP } from "../../constants/urls";
+export default function SignUp() {
   const [form, setForm] = useState({
     email: "",
     name: "",
@@ -13,20 +16,31 @@ export default function RegistrationPage() {
     password: "",
   });
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
   function handleForm(e) {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   }
-  function registration(e) {
+  function createAccount(e) {
     e.preventDefault();
-    console.log(form);
+
+    axios
+      .post(SIGN_UP, form)
+      .then((res) => {
+        console.log(res.data)
+        setLoading(true)
+        navigate("/")
+      })
+      .catch((err) => {
+        alert(err.response.data.message);
+        setLoading(false)
+      });
   }
 
   return (
     <ContainerApp>
       <img src={logo} alt="logo" />
-      <Form onSubmit={registration}>
+      <Form onSubmit={createAccount}>
         <input
           name="email"
           value={form.email}
@@ -80,7 +94,9 @@ export default function RegistrationPage() {
           )}
         </PatternButton>
       </Form>
-      <Title>Já tem uma conta? Faça login!</Title>
+      <Title>
+        <Link to="/">Já tem uma conta? Faça login!</Link>
+      </Title>
     </ContainerApp>
   );
 }
