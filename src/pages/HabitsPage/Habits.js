@@ -8,6 +8,7 @@ import { Main } from "../../components/StyledComponents/Main";
 import styled from "styled-components";
 import { useState } from "react";
 import CreateHabit from "./CreateHabit";
+import ListHabits from "./ListHabits";
 
 export default function Habits() {
   const [showCard, setShowCard] = useState(false);
@@ -20,10 +21,7 @@ export default function Habits() {
           <button onClick={() => setShowCard(!showCard)}>+</button>
         </Header>
         {showCard ? <CreateHabit setShowCard={setShowCard} /> : ""}
-        <InfoText>
-          Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
-          começar a trackear!
-        </InfoText>
+        <ListHabits />
       </Main>
       <Footer />
     </HabitsBack>
@@ -55,11 +53,3 @@ const Header = styled.header`
   }
 `;
 
-const InfoText = styled.h2`
-  font-family: "Lexend Deca";
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 23px;
-  color: #666666;
-  text-align: left;
-`;
