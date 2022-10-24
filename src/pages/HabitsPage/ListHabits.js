@@ -1,10 +1,12 @@
 import axios from "axios";
-import styled from "styled-components";
 import { useEffect, useContext, useState } from "react";
 import TrackContext from "../../TrackContext";
 import { HABITS_LIST } from "../../constants/urls";
+import ContainerList from "./ContainerList";
 
-export default function ListHabits() {
+
+
+export default function ListHabits({setShowText}) {
   const [items, setItems] = useState([]);
   const { user } = useContext(TrackContext);
   useEffect(() => {
@@ -18,6 +20,7 @@ export default function ListHabits() {
       .get(HABITS_LIST, config)
       .then((res) => {
         setItems(res.data);
+        setShowText(true);
         console.log(res.data);
       })
       .catch((err) => console.log(err.response.data.message));
@@ -25,25 +28,9 @@ export default function ListHabits() {
 
   return (
     <>
-      {!items ? (
-        <InfoText>
-          Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
-          começar a trackear!
-        </InfoText>
-      ) : (
-        <h1>Hello</h1>
-      )}
+      {items.map((el)=> <ContainerList key={el.id} name={el.name} days={el.days}/>)}
     </>
   );
 }
 
-const InfoText = styled.h2`
-  font-family: "Lexend Deca";
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 23px;
-  color: #666666;
-  text-align: left;
-`;
 
-const ListContainer = 

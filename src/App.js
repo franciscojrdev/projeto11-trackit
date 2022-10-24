@@ -3,6 +3,7 @@ import GlobalStyle from "./assets/styles/GlobalStyle";
 import Habits from "./pages/HabitsPage/Habits";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import SignUp from "./pages/SignUpPage/SignUp";
+import TodayPage from "./pages/TodayPage/TodayPage";
 import { TrackProvider } from "./TrackContext";
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<LoginPage />} />
           <Route path="/cadastro" element={<SignUp />} />
           <Route path="/habitos" element={<Habits />} />
+          <Route path="/hoje" element={<TodayPage />} />
         </Routes>
       </BrowserRouter>
     </TrackProvider>
