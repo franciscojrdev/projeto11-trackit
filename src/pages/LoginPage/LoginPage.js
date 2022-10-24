@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../assets/images/logo.png";
 import PatternButton from "../../components/StyledComponents/Button";
@@ -8,6 +8,7 @@ import { LOGIN_URL } from "../../constants/urls";
 import { useContext } from "react";
 import TrackContext from "../../TrackContext";
 import axios from "axios";
+import { LinkStyled } from "../../components/Footer/Footer";
 
 export default function LoginPage() {
 
@@ -50,6 +51,7 @@ export default function LoginPage() {
           placeholder="email"
           disabled={loading}
           required
+          data-identifier="input-email"
         />
         <input
           name="password"
@@ -59,6 +61,7 @@ export default function LoginPage() {
           placeholder="senha"
           disabled={loading}
           required
+          data-identifier="input-password"
         />
         <PatternButton disabled={loading}>
           {!loading ? (
@@ -78,7 +81,7 @@ export default function LoginPage() {
         </PatternButton>
       </Form>
       <Title>
-        <Link to={"/cadastro"}>Não tem uma conta? Cadastre-se!</Link>
+        <LinkStyled to={"/cadastro"}>Não tem uma conta? Cadastre-se!</LinkStyled>
       </Title>
     </ContainerApp>
   );
@@ -97,7 +100,6 @@ export const ContainerApp = styled.div`
     margin-bottom: 35px;
   }
 `;
-
 export const Form = styled.form`
   width: 100%;
   height: auto;

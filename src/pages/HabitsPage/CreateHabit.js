@@ -4,11 +4,13 @@ import { botoes } from "../../constants/mock";
 import { useState } from "react";
 import { useContext } from "react";
 import TrackContext from "../../TrackContext";
+import { ThreeDots } from "react-loader-spinner";
 import axios from "axios";
 
 export default function CreateHabit({ setShowCard }) {
   const [selectedDays, setSelectedDays] = useState([]);
   const [name, setName] = useState("");
+  const [loading, setLoading] = useState(false);
   const { user } = useContext(TrackContext);
 
   function handleClick(el) {
@@ -24,7 +26,7 @@ export default function CreateHabit({ setShowCard }) {
 
   function sendHabit() {
     if (name === undefined || name === "" || selectedDays.length === 0) {
-      alert("Digite novamente a sua tarefa");
+      alert("Falta Informações");
       return;
     }
     const body = {
@@ -39,8 +41,10 @@ export default function CreateHabit({ setShowCard }) {
     axios
       .post(HABITS_URL, body, config)
       .then((res) => {
-        setShowCard(false)
-        console.log(res.data)})
+        setShowCard(false);
+        setLoading(true);
+        console.log(res.data);
+      })
       .catch((err) => console.log(err.response.data.message));
   }
 
@@ -51,21 +55,53 @@ export default function CreateHabit({ setShowCard }) {
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder="nome do hábito"
+        disabled={loading}
         required
+        data-identifier="input-habit-name"
       />
-      <ContainerButton>
+      <ContainerButton disabled={loading}>
         {botoes.map((el) => (
-          <button
-            cor={selectedDays.includes(el) ? "#CFCFCF" : "#fff"}
+          <ClickButtons
+            cor={
+              selectedDays.map((day) => day.id).includes(el.id)
+                ? "#CFCFCF"
+                : "#fff"
+            }
+            corText={
+              !selectedDays.map((day) => day.id).includes(el.id)
+                ? "#CFCFCF"
+                : "#fff"
+            }
             onClick={() => handleClick(el)}
           >
             {el.name}
-          </button>
+          </ClickButtons>
         ))}
       </ContainerButton>
       <SectionButtons>
-        <span onClick={() => setShowCard(false)}>Cancelar</span>
-        <button onClick={sendHabit}>Salvar</button>
+        <span
+          data-identifier="cancel-habit-create-btn"
+          onClick={() => setShowCard(false)}
+        >
+          Cancelar
+        </span>
+
+        <button data-identifier="save-habit-create-btn" onClick={sendHabit}>
+          {!loading ? (
+            "Salvar"
+          ) : (
+            <ThreeDots
+              height="80"
+              width="80"
+              radius="9"
+              color="#fff"
+              ariaLabel="three-dots-loading"
+              wrapperStyle={{}}
+              wrapperClassName=""
+              visible={true}
+            />
+          )}
+        </button>
       </SectionButtons>
     </Container>
   );
@@ -130,17 +166,16 @@ const ContainerButton = styled.div`
   width: 100%;
   margin-top: 10px;
   margin-bottom: 10px;
-
-  button {
-    height: 30px;
-    width: 30px;
-    border-radius: 5px;
-    color: #cfcfcf;
-    font-family: "Lexend Deca";
-    font-size: 20px;
-    font-weight: 400;
-    margin-right: 5px;
-    background-color: ${(props) => props.cor};
-    border: 1px solid #d4d4d4;
-  }
+`;
+const ClickButtons = styled.button`
+  height: 30px;
+  width: 30px;
+  border-radius: 5px;
+  color: ${(props) => props.corText};
+  font-family: "Lexend Deca";
+  font-size: 20px;
+  font-weight: 400;
+  margin-right: 5px;
+  background-color: ${(props) => props.cor};
+  border: 1px solid #d4d4d4;
 `;

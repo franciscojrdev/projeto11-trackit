@@ -7,7 +7,7 @@ export default function NavBar() {
   return (
     <NavBarPage>
       <h1>TrackIt</h1>
-      <img src={user.image} alt="profile picture" />
+      <img data-identifier="avatar" src={user.image} alt="profile picture" />
     </NavBarPage>
   );
 }

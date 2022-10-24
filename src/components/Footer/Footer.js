@@ -3,17 +3,17 @@ import { Link } from "react-router-dom";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 
 export default function Footer() {
-  const percentage = 40;
+  const percentage = 10;
   return (
     <FooterPage>
-      <Link to="/habitos">
-        <h2>Hábitos</h2>
-      </Link>
+      <LinkStyled to="/habitos">
+        <h2 data-identifier="habit-page-action">Hábitos</h2>
+      </LinkStyled>
       <ProgressContainer>
         <Link to="/hoje">
           <CircularProgressbar
             value={percentage}
-            text={`${percentage}%`}
+            text={"Hoje"}
             background
             backgroundPadding={6}
             styles={buildStyles({
@@ -27,9 +27,9 @@ export default function Footer() {
           />
         </Link>
       </ProgressContainer>
-      <Link>
-        <h2>Histórico</h2>
-      </Link>
+      <LinkStyled to="/historico">
+        <h2 data-identifier="historic-page-action">Histórico</h2>
+      </LinkStyled>
     </FooterPage>
   );
 }
@@ -56,3 +56,7 @@ const ProgressContainer = styled.div`
   bottom: 20px;
   text-align: center;
 `;
+export const LinkStyled = styled(Link)`
+  color: inherit;
+  text-decoration: none;
+`

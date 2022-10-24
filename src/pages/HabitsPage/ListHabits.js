@@ -4,15 +4,13 @@ import TrackContext from "../../TrackContext";
 import { HABITS_LIST } from "../../constants/urls";
 import ContainerList from "./ContainerList";
 
-
-
-export default function ListHabits({setShowText}) {
+export default function ListHabits({ setShowText }) {
   const [items, setItems] = useState([]);
   const { user } = useContext(TrackContext);
   useEffect(() => {
     const config = {
       headers: {
-       "Authorization": `Bearer ${user.token}`,
+        "Authorization": `Bearer ${user.token}`,
       },
     };
 
@@ -28,9 +26,17 @@ export default function ListHabits({setShowText}) {
 
   return (
     <>
-      {items.map((el)=> <ContainerList key={el.id} name={el.name} days={el.days}/>)}
+      {items.map((el) => (
+        <ContainerList
+          items={items}
+          setItems={setItems}
+          id={el.id}
+          key={el.id}
+          name={el.name}
+          days={el.days}
+          token = {user.token}
+        />
+      ))}
     </>
   );
 }
-
-

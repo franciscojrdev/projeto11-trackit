@@ -4,10 +4,12 @@ import { Form } from "../LoginPage/LoginPage";
 import { Title } from "../LoginPage/LoginPage";
 import PatternButton from "../../components/StyledComponents/Button";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
 import axios from "axios";
 import { SIGN_UP } from "../../constants/urls";
+import { LinkStyled } from "../../components/Footer/Footer";
+
 export default function SignUp() {
   const [form, setForm] = useState({
     email: "",
@@ -49,6 +51,7 @@ export default function SignUp() {
           placeholder="email"
           disabled={loading}
           required
+          data-identifier="input-email"
         />
         <input
           name="password"
@@ -58,6 +61,7 @@ export default function SignUp() {
           placeholder="senha"
           disabled={loading}
           required
+          data-identifier="input-password"
         />
         <input
           name="name"
@@ -67,6 +71,7 @@ export default function SignUp() {
           placeholder="nome"
           disabled={loading}
           required
+          data-identifier="input-name"
         />
         <input
           name="image"
@@ -76,6 +81,7 @@ export default function SignUp() {
           placeholder="foto"
           disabled={loading}
           required
+          data-identifier="input-photo"
         />
         <PatternButton disabled={loading}>
           {!loading ? (
@@ -95,8 +101,10 @@ export default function SignUp() {
         </PatternButton>
       </Form>
       <Title>
-        <Link to="/">Já tem uma conta? Faça login!</Link>
+        <LinkStyled to="/">Já tem uma conta? Faça login!</LinkStyled>
       </Title>
     </ContainerApp>
   );
 }
+
+

@@ -9,28 +9,25 @@ import ListHabits from "./ListHabits";
 
 export default function Habits() {
   const [showCard, setShowCard] = useState(false);
-  const [showText, setShowText] = useState(true);
+  const [showText, setShowText] = useState(false);
   return (
     <HabitsBack>
       <NavBar />
       <Main>
         <Header>
           <h1>Meus hábitos</h1>
-          <button onClick={() => setShowCard(!showCard)}>+</button>
+          <button data-identifier="create-habit-btn" onClick={() => setShowCard(!showCard)}>+</button>
         </Header>
-        {showCard ? (
-          <CreateHabit setShowCard={setShowCard} />
-        ) : (
-          ""
-        )}
+        {showCard ? <CreateHabit setShowCard={setShowCard} /> : ""}
         {showText ? (
-          <ListHabits setShowText={setShowText}/>
+          ""
         ) : (
           <InfoText>
             Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
             começar a trackear!
           </InfoText>
         )}
+        <ListHabits setShowText={setShowText} />
       </Main>
       <Footer />
     </HabitsBack>
