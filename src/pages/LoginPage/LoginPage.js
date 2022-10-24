@@ -1,13 +1,19 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../assets/images/logo.png";
 import PatternButton from "../../components/StyledComponents/Button";
 import { ThreeDots } from "react-loader-spinner";
 import { LOGIN_URL } from "../../constants/urls";
+import { useContext } from "react";
+import TrackContext from "../../TrackContext";
 import axios from "axios";
 
 export default function LoginPage() {
+
+  const {setUser} = useContext(TrackContext);
+
+  const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
 
@@ -24,6 +30,8 @@ export default function LoginPage() {
       .then((res) => {
           console.log(res.data);
           setLoading(true);
+          navigate("/habitos")
+          setUser(res.data)
       })
       .catch((err) => {
           console.log(err.response.data.message);

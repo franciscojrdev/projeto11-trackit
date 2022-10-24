@@ -1,10 +1,13 @@
 import styled from "styled-components";
+import { useContext } from "react";
+import TrackContext from "../../TrackContext";
 
-export default function NavBar({logo}) {
+export default function NavBar() {
+  const {user} = useContext(TrackContext);
   return (
     <NavBarPage>
       <h1>TrackIt</h1>
-      <img src={logo} alt="profile picture" />
+      <img src={user.image} alt="profile picture" />
     </NavBarPage>
   );
 }
@@ -15,6 +18,8 @@ const NavBarPage = styled.div`
   box-shadow: 0px 4px 4px 0px #00000026;
   background-color: #126ba5;
   display: flex;
+  position: fixed;
+  top: 0;
   align-items: center;
   justify-content: space-between;
   padding-left: 18px;
